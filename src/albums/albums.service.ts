@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { Prisma, albums } from '@prisma/client';
+import { PrismaService } from '../core/prisma.service';
+import { Prisma } from '@prisma/client';
+import { Albums } from '../generated/dto/albums/entities/albums.entity';
 
 @Injectable()
 export class AlbumsService {
@@ -8,7 +9,7 @@ export class AlbumsService {
 
   async album(
     userWhereUniqueInput: Prisma.albumsWhereUniqueInput,
-  ): Promise<albums | null> {
+  ): Promise<Albums | null> {
     return this.prisma.albums.findUnique({
       where: userWhereUniqueInput,
     });
@@ -20,7 +21,7 @@ export class AlbumsService {
     cursor?: Prisma.albumsWhereUniqueInput;
     where?: Prisma.albumsWhereInput;
     orderBy?: Prisma.albumsOrderByWithRelationInput;
-  }): Promise<albums[]> {
+  }): Promise<Albums[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.albums.findMany({
       skip,

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { Prisma, photos } from '@prisma/client';
+import { PrismaService } from '../core/prisma.service';
+import { Prisma } from '@prisma/client';
+import { Photos } from '../generated/dto/photos/entities/photos.entity';
 
 @Injectable()
 export class PhotosService {
@@ -8,13 +9,13 @@ export class PhotosService {
 
   async photo(
     photosWhereUniqueInput: Prisma.photosWhereUniqueInput,
-  ): Promise<photos | null> {
+  ): Promise<Photos | null> {
     return this.prisma.photos.findUnique({
       where: photosWhereUniqueInput,
     });
   }
 
-  async photosByAlbumId(albumId: number): Promise<photos[] | null> {
+  async photosByAlbumId(albumId: number): Promise<Photos[] | null> {
     return this.prisma.photos.findMany({
       where: { albumId: albumId },
     });
@@ -26,7 +27,7 @@ export class PhotosService {
     cursor?: Prisma.photosWhereUniqueInput;
     where?: Prisma.photosWhereInput;
     orderBy?: Prisma.photosOrderByWithRelationInput;
-  }): Promise<photos[]> {
+  }): Promise<Photos[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.photos.findMany({
       skip,

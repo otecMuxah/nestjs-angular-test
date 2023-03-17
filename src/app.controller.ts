@@ -9,9 +9,4 @@ export class AppController {
   getHello(@Param() params): string {
     return this.appService.getHello(params.id);
   }
-
-  @Get()
-  getUsers(@Param() params): string {
-    return this.appService.getHello(params.id);
-  }
 }
